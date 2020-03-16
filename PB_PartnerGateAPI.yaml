@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: АПИ ШИО Платформы бонусирования
 servers:
-  - url: http://petstore.swagger.io/v1
+  - url: http://www.mts.io/v1
 tags:
   - name: "pbpgapi"
     description: "Передача информации о покупках" 
