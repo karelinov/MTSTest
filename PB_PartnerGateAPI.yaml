@@ -28,7 +28,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiResponse" 
+                $ref: "#/components/schemas/ApiResponse"
 
 components:
   schemas:
@@ -66,7 +66,9 @@ components:
         code:
           type: "integer"
           description: "код результата (0 = успешно)"
+          example: "1"
         message:
           type: "string"
-          description: "описание результаата (ошибки в случае code <>0)"                    
+          description: "описание результаата (ошибки в случае code <>0)"
+          example: "Не удалось верифицировать подпись сообщения"                    
           
