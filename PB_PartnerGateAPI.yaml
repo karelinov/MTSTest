@@ -1,30 +1,30 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: РђРџР РЁРРћ РџР»Р°С‚С„РѕСЂРјС‹ Р±РѕРЅСѓСЃРёСЂРѕРІР°РЅРёСЏ
+  title: АПИ ШИО Платформы бонусирования
 servers:
   - url: http://petstore.swagger.io/v1
 tags:
   - name: "pbpgapi"
-    description: "РџРµСЂРµРґР°С‡Р° РёРЅС„РѕСЂРјР°С†РёРё Рѕ РїРѕРєСѓРїРєР°С…" 
+    description: "Передача информации о покупках" 
 paths:
   /pbpgapi:
     post:
-      description: РћС‚РїСЂР°РІРёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїРѕРєСѓРїРєРµ РІ РїР»Р°С‚С„РѕСЂРјСѓ Р±РѕРЅСѓСЃРёСЂРѕРІР°РЅРёСЏ
+      description: Отправить информацию о покупке в платформу бонусирования
       tags:
         - pbpgapi
       parameters:
       - in: "query"
-        description: "РґР°РЅРЅС‹Рµ РїРѕРєСѓРїРєРё"
+        description: "данные покупки"
         name: "body"
         required: true
         schema:
           $ref: "#/components/schemas/PurchaseData"                
       responses:
         200:
-          description: "РЈСЃРїРµС€РЅС‹Р№ РїСЂРёС‘Рј РёРЅС„РѕСЂРјР°С†РёРё"
+          description: "Успешный приём информации"
         403:
-          description: "РќРµ СѓРґР°Р»РѕСЃСЊ РёРґРµРЅС‚РёС„РёС†РёСЂРѕРІР°С‚СЊ РїР°СЂС‚РЅС‘СЂР°"
+          description: "Не удалось идентифицировать партнёра"
           content:
             application/json:
               schema:
@@ -33,31 +33,31 @@ paths:
 components:
   schemas:
     PurchaseData:
-      description: "РћР±СЉРµРєС‚ СЃ РґР°РЅРЅС‹РјРё РїСЂРѕРґР°Р¶Рё"
+      description: "Объект с данными продажи"
       type: object
       properties:
         partner_id:
           type: integer
-          description: "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїР°СЂС‚РЅС‘СЂР° РњРћРџРЎ"
+          description: "Идентификатор партнёра МОПС"
           example: 12
         id:
           type: integer
-          description: "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРѕРґР°Р¶Рё Сѓ РїР°СЂС‚РЅС‘СЂР°"
+          description: "Идентификатор продажи у партнёра"
           example: 245467
         product_category:
           type: string
-          description: "РљР°С‚РµРіРѕСЂРёСЏ РїРѕРєСѓРїРєРё"
+          description: "Категория покупки"
           enum:
           - "food"
           - "homecare"
           - "electronics"
         sum:            
           type: integer
-          description: "РЎСѓРјРјР° РїРѕРєСѓРїРєРё РІ СЂСѓР±Р»СЏС…"
+          description: "Сумма покупки в рублях"
           example: 123
         signature:
           type: string
-          description: "РџРѕРґРїРёСЃСЊ Р·РЅР°С‡РµРЅРёР№ РїРѕР»РµР№ partner_id, id, product_category, sum"
+          description: "Подпись значений полей partner_id, id, product_category, sum"
           example: "1234vdsfmfhg761234654=="            
         
     ApiResponse:
@@ -65,8 +65,8 @@ components:
       properties:
         code:
           type: "integer"
-        type:
-          type: "string"
+          description: "код результата (0 = успешно)"
         message:
-          type: "string"          
+          type: "string"
+          description: "описание результаата (ошибки в случае code <>0)"                    
           
