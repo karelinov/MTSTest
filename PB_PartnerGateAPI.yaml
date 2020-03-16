@@ -1,0 +1,72 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: АПИ ШИО Платформы бонусирования
+servers:
+  - url: http://petstore.swagger.io/v1
+tags:
+  - name: "pbpgapi"
+    description: "Передача информации о покупках" 
+paths:
+  /pbpgapi:
+    post:
+      description: Отправить информацию о покупке в платформу бонусирования
+      tags:
+        - pbpgapi
+      parameters:
+      - in: "query"
+        description: "данные покупки"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/components/schemas/PurchaseData"                
+      responses:
+        200:
+          description: "Успешный приём информации"
+        403:
+          description: "Не удалось идентифицировать партнёра"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse" 
+
+components:
+  schemas:
+    PurchaseData:
+      description: "Объект с данными продажи"
+      type: object
+      properties:
+        partner_id:
+          type: integer
+          description: "Идентификатор партнёра МОПС"
+          example: 12
+        id:
+          type: integer
+          description: "Идентификатор продажи у партнёра"
+          example: 245467
+        product_category:
+          type: string
+          description: "Категория покупки"
+          enum:
+          - "food"
+          - "homecare"
+          - "electronics"
+        sum:            
+          type: integer
+          description: "Сумма покупки в рублях"
+          example: 123
+        signature:
+          type: string
+          description: "Подпись значений полей partner_id, id, product_category, sum"
+          example: "1234vdsfmfhg761234654=="            
+        
+    ApiResponse:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+        type:
+          type: "string"
+        message:
+          type: "string"          
+          
